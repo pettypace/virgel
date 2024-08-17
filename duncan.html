@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacPherson WTI Estimator</title>
+    <title>Defense Wound Mass Estimator</title>
     <script>
         function calculateWoundMass() {
             const unitSystem = document.querySelector('input[name="unitSystem"]:checked').value;
@@ -19,12 +19,12 @@
            if(bulletType === 'expandedJHP') {result *= 0.82;}   
            if(bulletType === 'allOthers') {result *= 0.67;}                    
            result = Math.round(result);
-           document.getElementById('result').innerText = 'MacPherson WTI: ' + result + ' grams';}
+           document.getElementById('result').innerText = 'Defense Wound Mass: ' + result + ' grams';}
     </script>
 </head>
 <body>
-    <h2>MacPherson WTI Estimator</h2>
-    <h5>(based on MacPherson's <i>Bullet Penetration</i>, ch. 11)</h5>
+    <h2>Defense Wound Mass Estimator</h2>
+    <h5><i>Not for tumbling, fragmenting, or high-speed bullets!)</i>, ch. 11)</h5>
     <form onsubmit="event.preventDefault(); calculateWoundMass();">
     
    <label for="unitSystem">Choose Units:</label><br>
