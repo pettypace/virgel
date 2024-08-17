@@ -1,0 +1,579 @@
+<!--
+ * virgel.html  <https://rewebster.org/virgel.html>
+ * Copyright (c) 2022 R.E. Webster <https://rewebster.org>
+ * Released under MIT License
+ */
+
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--    <script src="html2canvas.js"></script>  -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script> 
+    <script type="text/javascript">
+
+        function downloadimage() {
+            var container = document.getElementById("printbox");
+            html2canvas(container, { allowTaint: true }).then(function (canvas) {
+
+                var link = document.createElement("a");
+                document.body.appendChild(link);
+                link.download = print_file_name();
+                link.href = canvas.toDataURL();
+                link.target = '_blank';
+                link.click();
+            });
+        }
+
+
+       function downloadCanvasImage() {
+       
+                var myCanvas = document.getElementById("myCanvas");
+                var link = document.createElement("a");
+                document.body.appendChild(link);
+                link.download = print_file_name();
+                link.href = myCanvas.toDataURL();
+                link.target = '_blank';
+                link.click();
+           
+        }
+
+    </script>
+
+<style>
+
+
+  body {
+  resize: none;
+}
+
+  #databox {
+    position: static;
+    width: 100%;
+    color: black;
+    font-size: 14px;
+    border: none;
+    border-radius: 0px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+
+#printbox {
+    position: static;
+    width: 100%;
+}
+
+
+.popup {
+  position: absolute;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  float: none;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+
+.popup .popuptext {
+  visibility: hidden;
+  position: absolute;
+  width: 80%;
+  background-color: #444;
+  color: white;
+  text-align: left;
+  border-radius: 20px;
+  padding: 10px 10px;
+
+
+  z-index: 1;
+  top: 5%;
+  left: 10%;
+}
+
+
+
+
+#virgel {
+  margin-left: 37%;
+
+}
+
+
+.slidecontainer {
+  width: 100%%;
+
+  color: black;
+  font-size: 16px;
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #d3d3d3;
+  outline: solid black 3px;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition:  .2s;
+}
+
+
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 10px;
+  border-radius: 5px;
+  border: 3px solid #000000;
+  background: #ff0000;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 30px;
+  height: 10px;
+  border-radius: 5px;
+  border: 3px solid #000000;
+  background: #ff0000;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+
+
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+
+</style>
+</head>
+
+
+
+<body>
+
+
+<div id="printbox">
+
+<div class="popup" onclick="myFunction()"><img src="logo.png" alt="VIRGEL">
+  <span class="popuptext" id="myPopup">
+
+
+<b><center>About VIRGEL</center></b><br>
+
+
+<b>VIRGEL is a "heuristic calculator" designed to give quick and dirty estimates of the likely gelatin test performance of self-defense ammunition for most handguns as well as some rifles and shotguns. 
+
+<br><br>
+
+VIRGEL cannot tell you exactly how your ammunition will perform. But it can give you a better idea of how bullet nose shape, diameter, weight, and velocity interact to determine penetration and wound mass.
+
+<br><br>
+
+Because VIRGEL isn't really gelatin, it has limitations. For example, VIRGEL can't predict bullet expansion or deal with tumbling, fragmenting, or very high velocity bullets. But VIRGEL is faster and cheaper than real gelatin and fits in your phone.
+
+<br><br>
+
+VIRGEL estimates penetration using a simplified "THOR" equation (see chapter 9 of <i>Quantitative Ammunition Selection</i> by Charles Schwartz) fitted to data from Duncan MacPherson's penetration modeling (see MacPherson's <i>Bullet Penetration</i>, ch. 10).
+
+<br><br>
+
+VIRGEL calculates "Defense Wound Mass" in the permanent cavity, discounting the last 3" of bullet penetration as too slow and penetration beyond 15" as too late.
+
+<br><br>
+
+VIRGEL calculates "Big Game Wound Mass" using the full depth of estimated bullet penetration.
+
+<br><br>
+
+VIRGEL calculates kinetic energy as a possible indicator of barrier penetration and power factor as an indicator of recoil.
+
+<br><br>
+
+VIRGEL is intended as a heuristic tool and makes no wild claims for accuracy beyond (maybe) two significant figures. So, don't fret over not nailing velocity to the last ft/s or weight to the last grain.
+
+<br><br>
+
+
+VIRGEL was coded by Robert Webster and Ross Kowalski in their copious free time and is licensed under MIT's open source initiative "Approved License." (C) 2022, R.E.Webster.</b>
+
+
+<br><br>
+
+
+</span>
+</div>
+
+
+<br><br><br>
+
+
+
+<div id="databox">
+
+<!--  <span id="virgel"><b>VIRGEL</b></span><br><br><br>  -->
+
+  <span id="nose_value"></span>&nbsp;&nbsp;  
+  <span id="diameter_value2"></span>/100"&nbsp;&nbsp;
+  <span id="weight_value2"></span>&nbsp;gr&nbsp;
+  <span id="velocity_value2"></span>&nbsp;f/s&nbsp;
+
+<br>
+
+
+
+  <b>10% Gel Penetration:</b><span id="PEN_value"></span>&nbsp;inches<br>
+
+  <b>Defense Wound Mass:</b> <span id="SD_value"></span>&nbsp;grams<br>
+
+  <b>Big Game Wound Mass:</b> <span id="BG_value"></span>&nbsp;grams<br>
+
+  <b>Kinetic Energy:</b> <span id="KE_value"></span>&nbsp;ft-lb<br>
+
+  <b>Power Factor:</b> <span id="PF_value"></span><br>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="slidecontainer">
+
+  <table cellpadding="0" cellspacing="0" width="100%" border="0">
+    <tr>
+      <td width="19%" style="text-align:left"> <b>WC</b></td>
+      <td width="19%" style="text-align:left"> <b>&nbsp;&nbsp;TC</b></td>
+      <td width="19%" style="text-align:left"> <b>SWC</b></td>
+      <td width="19%" style="text-align:left"> <b>&nbsp;&nbsp;RN</b></td>
+      <td width="19%" style="text-align:left"> <b>&nbsp;&nbsp;&nbsp;RB</b></td>
+      <td width="5%" style="text-align:left"> <b>MSH</b></td>
+    </tr>
+  </table>
+
+
+  <input id="nose" type="range" min="1" max="6"  step="1" value="4" class="slider"  onchange="calculate()" >
+
+<br>
+
+  <b>Diameter:</b> <span id="diameter_value"></span>/100 inches
+
+  <input id="diameter" type="range" min="10" max="110" value="45" class="slider"  onchange="calculate()" >
+
+<br>
+
+  <b>Weight:</b> <span id="weight_value"></span>&nbsp;grains
+
+  <input   id="weight" type="range" min="20" max="500" step="5" value="230"  class="slider" onchange="calculate()" >
+
+<br>
+
+  <b>Velocity:</b> <span id="velocity_value"></span>&nbsp;ft/sec
+
+  <input id="velocity" type="range" min="400" max="1600" step="5" value="825" class="slider" onchange="calculate()">
+
+
+</div>
+<br>
+
+<canvas id="myCanvas" width="340" height="260"
+style="border:solid 2px">
+</canvas>
+
+<br>
+
+<span id="htmltoimage">
+        <button onclick="downloadimage()" class="clickbtn">Download Top</button>
+    </span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+   <span id="htmltoimage">
+        <button onclick="downloadCanvasImage()" class="clickbtn">Download Bottom</button>
+    </span>
+
+
+
+
+
+<script>
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+
+var alpha = 0.69;
+var phi=1.00;
+var nose_slider = document.getElementById("nose");
+var nose_output = document.getElementById("nose_value");
+var sd;
+
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+
+function bold_shape(){
+  switch(nose_slider.value){
+    case "1" : return "<b>WC:</b>"; 
+    case "2" : return "<b>TC:</b>";
+    case "3" : return "<b>SWC:</b>";
+    case "4" : return "<b>RN:</b>";
+    case "5" : return "<b>RB:</b>";
+    case "6" : return "<b>MSH:</b>";
+  }
+}
+
+
+nose_output.innerHTML = bold_shape();
+
+function nose_shape(){
+  switch(nose_slider.value){
+    case "1" : return "WC"; 
+    case "2" : return "TC";
+    case "3" : return "SWC";
+    case "4" : return "RN";
+    case "5" : return "RB";
+    case "6" : return "MSH";
+  }
+}
+
+
+
+
+
+var velocity_slider = document.getElementById("velocity");
+var velocity_output = document.getElementById("velocity_value");
+velocity_output.innerHTML = velocity_slider.value;
+var velocity_output2 = document.getElementById("velocity_value2");
+velocity_output2.innerHTML = velocity_slider.value;
+velocity_slider.oninput = function() {
+  velocity_output.innerHTML = this.value;
+  velocity_output2.innerHTML = this.value;
+  calculate();
+}
+
+
+var weight_slider = document.getElementById("weight");
+var weight_output = document.getElementById("weight_value");
+weight_output.innerHTML = weight_slider.value;
+var weight_output2 = document.getElementById("weight_value2");
+weight_output2.innerHTML = weight_slider.value;
+weight_slider.oninput = function() {
+  weight_output.innerHTML = this.value;
+  weight_output2.innerHTML = this.value;
+  calculate();
+}
+
+
+
+var diameter_slider = document.getElementById("diameter");
+var diameter_output = document.getElementById("diameter_value");
+diameter_output.innerHTML = diameter_slider.value;
+var diameter_output2 = document.getElementById("diameter_value2");
+diameter_output2.innerHTML = diameter_slider.value;
+diameter_slider.oninput = function() {
+  diameter_output.innerHTML = this.value;
+  diameter_output2.innerHTML = this.value;
+  calculate();
+}
+
+
+function DrawThisLoad(ypos)
+{
+
+  ctx.fillStyle = "white";
+  ctx.fillRect(0,28,340,25);
+
+  ctx.fillStyle = "black";
+  ctx.beginPath();
+
+
+  var pen = (velocity.value**alpha*weight.value/7000/(diameter.value/200)**2/3.14);
+  pen = pen - 3;
+  if (pen > 15) {pen=15};
+  var sd = (3.14*(diameter.value/200)**2*pen*17*phi); 
+  WTI_bar(print_load_name(), 75, ypos, Math.round(sd), 15, "red"); 
+
+}
+
+
+
+
+
+function calculate () {
+  switch(nose.value){
+    case "1": phi=1.00; alpha=0.69; break;
+    case "2": phi=0.66; alpha=0.74; break;
+    case "3": phi=0.66; alpha=0.73; break;
+    case "4": phi=0.66; alpha=0.74; break;
+    case "5": phi=0.50; alpha=0.75; break;
+    case "6": phi=0.82; alpha=0.74; break;
+  }
+  nose_output.innerHTML = bold_shape();
+  var pf = (velocity.value * weight.value /1000);
+  document.getElementById("PF_value").innerHTML = ` ${Math.round(pf)}`;
+  var ke = (velocity.value * velocity.value * weight.value /450240);
+  document.getElementById("KE_value").innerHTML = ` ${Math.round(ke)}`;
+  var pen = (velocity.value**alpha*weight.value/7000/(diameter.value/200)**2/3.14);
+  document.getElementById("PEN_value").innerHTML = ` ${Math.round(pen)}`;
+  var bg = (3.14*(diameter.value/200)**2*pen*17*phi);
+  document.getElementById("BG_value").innerHTML = ` ${Math.round(bg)}`;
+  pen = pen - 3;
+  if (pen > 15) {pen=15};
+  sd = (3.14*(diameter.value/200)**2*pen*17*phi);  
+  document.getElementById("SD_value").innerHTML = ` ${Math.round(sd)}`;
+  DrawThisLoad(30);
+}
+
+
+function print_file_name(){
+  var the_name = "Virgel_"  + nose_shape() + "_"  + diameter.value + "_"  + weight.value + "_"  + velocity.value;
+  return the_name;
+}
+
+
+function print_load_name(){
+  var the_name = nose_shape() + "/"  + diameter.value + "/"  + weight.value + "/"  + velocity.value;
+  return the_name;
+}
+ 
+
+
+function ClearWtiGraph()
+{
+  ctx.clearRect(0,30,200,30);
+}
+
+
+
+function WTI_bar(cart,xpos,ypos,wti,width, color){
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.rect(xpos, ypos, wti*1.4, width);
+  ctx.fill();
+  ctx.fillStyle = "black";
+  ctx.font = "9px Arial"; 
+  ctx.textAlign = "right";
+  ctx.fillText(cart+": ", xpos,ypos+width-5);
+  ctx.textAlign = "left";
+  ctx.fillText("("+wti+" g)", xpos+wti*1.4+5,ypos+width-5);
+
+}
+
+
+
+
+function DrawWtiBarGraph()
+{
+  ctx.fillStyle = "white";
+  ctx.beginPath();
+  ctx.rect(0,0,340,260);
+  ctx.fill();
+  ctx.fillStyle = "black";
+
+
+  ctx.font = "15px Arial";
+  ctx.fillText("Defense Wound Mass Comparison", 40, 20);
+  var y = 35;
+  var dy = 20;
+
+  y=y+dy;
+
+  WTI_bar("22 LR HP (rifle)", 75, y, 11, 15, "#aaa"); y=y+dy;
+
+  WTI_bar("9mm FMJ", 75, y, 16, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("38 WC 2in", 75, y, 25, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("45 Hardball", 75, y, 27, 15,"#aaa");  y=y+dy;
+
+  WTI_bar("38 FBI Load", 75, y, 37, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("9mm 147 JHP", 75, y, 40, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("45 230 XTP", 75, y, 58, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("30 Carbine SP", 75, y, 60, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("45-70 HP", 75, y, 96, 15, "#aaa");  y=y+dy;
+
+  WTI_bar("12 gauge slug", 75, y, 156, 15, "#aaa");  y=y+dy;
+
+  
+}
+
+
+calculate();
+DrawWtiBarGraph()
+
+</script>
+
+
+
+
+</body>
+</html>
