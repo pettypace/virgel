@@ -1,5 +1,5 @@
 <!--
- * virgel.html  <https://rewebster.org/virgel.html>
+ * virgel.html  <https://github.com/pettypace/virgel>
  * Copyright (c) 2022 R.E. Webster <https://rewebster.org>
  * Released under MIT License
  */
@@ -168,15 +168,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
 .popup .popuptext::after {
   content: "";
   position: absolute;
@@ -224,10 +215,14 @@
 
 <b><center>About VIRGEL</center></b><br>
 
-
 <b>VIRGEL is a "heuristic calculator" designed to give quick and dirty estimates of the likely gelatin test performance of self-defense ammunition for most handguns as well as some rifles and shotguns. 
 
 <br><br>
+
+VIRGEL estimates penetration using a simplified "THOR" equation (see chapter 9 of <i>Quantitative Ammunition Selection</i> by Charles Schwartz) fitted to data from Duncan MacPherson's penetration modeling (see MacPherson's <i>Bullet Penetration</i>, ch. 10).
+
+<br><br>
+
 
 VIRGEL cannot tell you exactly how your ammunition will perform. But it can give you a better idea of how bullet nose shape, diameter, weight, and velocity interact to determine penetration and wound mass.
 
@@ -237,9 +232,7 @@ Because VIRGEL isn't really gelatin, it has limitations. For example, VIRGEL can
 
 <br><br>
 
-VIRGEL estimates penetration using a simplified "THOR" equation (see chapter 9 of <i>Quantitative Ammunition Selection</i> by Charles Schwartz) fitted to data from Duncan MacPherson's penetration modeling (see MacPherson's <i>Bullet Penetration</i>, ch. 10).
 
-<br><br>
 
 VIRGEL calculates "Defense Wound Mass" in the permanent cavity, discounting the last 3" of bullet penetration as too slow and penetration beyond 15" as too late.
 
@@ -249,7 +242,7 @@ VIRGEL calculates "Big Game Wound Mass" using the full depth of estimated bullet
 
 <br><br>
 
-VIRGEL calculates kinetic energy as a possible indicator of barrier penetration and power factor as an indicator of recoil.
+VIRGEL calculates kinetic energy as a possible indicator of barrier penetration and calculates power factor as an indicator of recoil.
 
 <br><br>
 
@@ -466,12 +459,12 @@ function DrawThisLoad(ypos)
 
 function calculate () {
   switch(nose.value){
-    case "1": phi=1.00; alpha=0.69; break;
-    case "2": phi=0.66; alpha=0.74; break;
-    case "3": phi=0.66; alpha=0.73; break;
-    case "4": phi=0.66; alpha=0.74; break;
-    case "5": phi=0.50; alpha=0.75; break;
-    case "6": phi=0.82; alpha=0.74; break;
+    case "1": phi=1.00; alpha=0.6887; break;
+    case "2": phi=0.66; alpha=0.7382; break;
+    case "3": phi=0.66; alpha=0.7299; break;
+    case "4": phi=0.66; alpha=0.7281; break;
+    case "5": phi=0.50; alpha=0.7485; break;
+    case "6": phi=0.82; alpha=0.7411; break;
   }
   nose_output.innerHTML = bold_shape();
   var pf = (velocity.value * weight.value /1000);
