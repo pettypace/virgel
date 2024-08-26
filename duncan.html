@@ -3,7 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defense Wound Mass Estimator</title>
+    <title>Modified MacPherson Wound Mass</title>
+   
+      <style>
+       .source-trigger {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .source-trigger .tooltip-text {
+            visibility: hidden;
+            width: 350px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -30px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .source-trigger:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style> 
+    
+    
+    
+    
     <script>
         function calculateWoundMass() {
             const unitSystem = document.querySelector('input[name="unitSystem"]:checked').value;
@@ -12,19 +48,29 @@
             var penetration = parseFloat(document.getElementById('penetration').value);                  
             if (unitSystem === 'english') {
                penetration = penetration * 2.54;
-               diameter = diameter * 2.54;}       
+               diameter = diameter * 2.54;}   
+           var bigGamePenetration = penetration;        
            penetration = penetration - 7.6;
            if (penetration > 38) {penetration = 38};
-           var result = 3.14 * diameter * diameter / 4  * penetration;
-           if(bulletType === 'expandedJHP') {result *= 0.82;}   
-           if(bulletType === 'allOthers') {result *= 0.67;}                    
-           result = Math.round(result);
-           document.getElementById('result').innerText = 'Defense Wound Mass: ' + result + ' grams';}
+           var area = 3.14 * diameter * diameter / 4;
+           if(bulletType === 'expandedJHP') {area *= 0.82;}   
+           if(bulletType === 'allOthers') {area *= 0.67;} 
+           var defenseResult = area * penetration;
+           var bigGameResult  = area * bigGamePenetration;
+           defenseResult = Math.round(defenseResult);
+           bigGameResult = Math.round(bigGameResult);
+           document.getElementById('defenseResult').innerText = 'Defense Wound Mass: ' + defenseResult + ' grams';
+            document.getElementById('bigGameResult').innerText = 'Big Game Wound Mass: ' + bigGameResult + ' grams';}
     </script>
 </head>
 <body>
-    <h2>Defense Wound Mass Estimator</h2>
-    <h5><i>(Not for tumbling, fragmenting, or high-speed bullets!)</i></h5>
+
+
+
+
+
+    <h2>Modified MacPherson Wound Mass</h2>
+
     <form onsubmit="event.preventDefault(); calculateWoundMass();">
     
    <label for="unitSystem">Choose Units:</label><br>
@@ -49,7 +95,20 @@
         <br><br>
         <input type="submit" value="Calculate">
     </form>   
-    <p id="result"></p>
+    <p id="defenseResult"></p>
+     <p id="bigGameResult"></p>
+     
+  <p>
+   <span id="ke-output"></span>
+    <span class="source-trigger">Source
+        <span class="tooltip-text">
+            MacPherson, Duncan, <i>Bullet Penetration</i>, 1994.
+        </span>
+    </span>
+</p>
+     
+     
+     
 </body>
 </html>
 
