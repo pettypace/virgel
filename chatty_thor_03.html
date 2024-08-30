@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-Friendly Penetration Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #citation {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Penetration Calculator</h2>
+
+    <form id="calculatorForm">
+
+        <!-- Radio Buttons for Nose Shape -->
+        <label>Select Bullet Nose Shape:</label>
+        <input type="radio" name="nose" value="wc" checked> WC
+        <input type="radio" name="nose" value="tc"> TC
+        <input type="radio" name="nose" value="swc"> SWC
+        <input type="radio" name="nose" value="rn"> RN
+        <input type="radio" name="nose" value="rb"> RB
+        <input type="radio" name="nose" value="msh"> MSH
+
+        <!-- Input Fields for D, W, V -->
+        <label for="diameter">Enter Bullet Diameter (inches): </label>
+        <input type="number" id="diameter" name="D" step="0.001" required>
+
+        <label for="weight">Enter Bullet Weight (grains): </label>
+        <input type="number" id="weight" name="W" required>
+
+        <label for="velocity">Enter Bullet Velocity (ft/sec): </label>
+        <input type="number" id="velocity" name="V" required>
+
+        <!-- Calculate Button -->
+        <button type="button" onclick="calculatePenetration()">CALCULATE</button>
+
+    </form>
+
+    <!-- Output -->
+    <p id="result"></p>
+    <p id="citation">
+        This calculator uses the Expedient Equation from Charles Schwartz's <em>Quantitative Ammunition Selection</em> (2012), published by iUniverse.
+    </p>
+
+    <footer>
+        &copy; 2024 Robert E. Webster. MIT License, no restrictions.
+    </footer>
+
+    <script>
+        function calculatePenetration() {
+            // Nose shape data
+            const noseData = {
+                wc: { alpha: 0.685, phi: 1.00 },
+                tc: { alpha: 0.735, phi: 0.662 },
+                swc: { alpha: 0.725, phi: 0.662 },
+                rn: { alpha: 0.720, phi: 0.688 },
+                rb: { alpha: 0.745, phi: 0.497 },
+                msh: { alpha: 0.740, phi: 0.819 }
+            };
+
+            // Get selected nose shape
+            const noseShape = document.querySelector('input[name="nose"]:checked').value;
+            const alpha = noseData[noseShape].alpha;
+
+            // Get input values
+            const D = parseFloat(document.getElementById("diameter").value);
+            const W = parseFloat(document.getElementById("weight").value);
+            const V = parseFloat(document.getElementById("velocity").value);
+
+            // Calculate P using the formula
+            const P = Math.pow(V, alpha) * W / 7000 / Math.pow(D / 2, 2) / 3.14;
+
+            // Output the result, rounded to the nearest tenth
+            document.getElementById("result").innerHTML = `Penetration: ${P.toFixed(1)} (inches)`;
+        }
+    </script>
+
+</body>
+</html>
+
