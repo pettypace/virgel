@@ -223,6 +223,17 @@ VIRGEL estimates penetration using a simplified "THOR" equation (see chapter 9 o
 
 <br><br>
 
+VIRGEL calculates "Defense Wound Mass" in the permanent cavity, discounting the last 3" of bullet penetration as too slow and penetration beyond 15" as too late. (see MacPherson's <i>Bullet Penetration</i>, ch. 11).
+
+<br><br>
+
+VIRGEL calculates "Big Game Wound Mass" using the full depth of estimated bullet penetration.  (see MacPherson's <i>Bullet Penetration</i>, equation 11-1, page 267).
+
+<br><br>
+
+VIRGEL calculates kinetic energy as a possible indicator of barrier penetration and calculates power factor as an indicator of recoil.
+
+<br><br>
 
 VIRGEL cannot tell you exactly how your ammunition will perform. But it can give you a better idea of how bullet nose shape, diameter, weight, and velocity interact to determine penetration and wound mass.
 
@@ -232,24 +243,9 @@ Because VIRGEL isn't really gelatin, it has limitations. For example, VIRGEL can
 
 <br><br>
 
-
-
-VIRGEL calculates "Defense Wound Mass" in the permanent cavity, discounting the last 3" of bullet penetration as too slow and penetration beyond 15" as too late.
-
-<br><br>
-
-VIRGEL calculates "Big Game Wound Mass" using the full depth of estimated bullet penetration.
-
-<br><br>
-
-VIRGEL calculates kinetic energy as a possible indicator of barrier penetration and calculates power factor as an indicator of recoil.
-
-<br><br>
-
 VIRGEL is intended as a heuristic tool and makes no wild claims for accuracy beyond (maybe) two significant figures. So, don't fret over not nailing velocity to the last ft/s or weight to the last grain.
 
 <br><br>
-
 
 VIRGEL was coded by Robert Webster and Ross Kowalski in their copious free time and is licensed under MIT's open source initiative "Approved License." (C) 2022, R.E.Webster.</b>
 
@@ -454,18 +450,22 @@ function DrawThisLoad(ypos)
 }
 
 
-
-
-
 function calculate () {
   switch(nose.value){
-    case "1": phi=1.00; alpha=0.6887; break;
-    case "2": phi=0.66; alpha=0.7382; break;
-    case "3": phi=0.66; alpha=0.7299; break;
-    case "4": phi=0.66; alpha=0.7281; break;
-    case "5": phi=0.50; alpha=0.7485; break;
-    case "6": phi=0.82; alpha=0.7411; break;
+    case "1": phi=1.00; alpha=0.6887; break;  //WC
+    case "2": phi=0.66; alpha=0.7382; break;  //TC
+    case "3": phi=0.66; alpha=0.7299; break;  //SWC
+    case "4": phi=0.66; alpha=0.7281; break;  //RN
+    case "5": phi=0.50; alpha=0.7485; break;  //RB
+    case "6": phi=0.82; alpha=0.7411; break;  //MSH
   }
+  
+  
+  
+  
+  
+  
+  
   nose_output.innerHTML = bold_shape();
   var pf = (velocity.value * weight.value /1000);
   document.getElementById("PF_value").innerHTML = ` ${Math.round(pf)}`;
