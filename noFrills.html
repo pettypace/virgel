@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+
+
+<style>
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+ 
+p {
+   
+  color: black;
+
+  font-weight:bold;
+}
+
+</style >
+
+
+</head>
+
+
+<body>
+
+<div><h2>No-Frills VIRGEL</h2></div>
+
+<div></div>
+
+
+<div>
+  <canvas id="graphCanvas" width="500" height="150"></canvas>
+</div>
+
+
+
+<div>
+  <div class="slidecontainer">
+      
+     <p>Nose: <span id="outputN"></span></p>
+    <input type="range" min="1" max="6" value="4" step="1" class="slider" id="sliderN" oninput="calculate()">      
+      
+      
+    <p>Diameter: <span id="outputD"></span>/100"</p>
+    <input type="range" min="20" max="110" value="45" step="1" class="slider" id="sliderD" oninput="calculate()" >
+
+    <p>Weight: <span id="outputW"></span> grains</p>
+    <input type="range" min="25" max="500" value="230" step="5" class="slider" id="sliderW" oninput="calculate()">
+
+    <p>Velocity: <span id="outputV"></span> f/s</p>
+    <input type="range" min="400" max="1600" value="850" step="5" class="slider" id="sliderV" oninput="calculate()">
+    
+  </div>
+
+</body>
+
+<script>
+
+var alpha = 0.685;
+var phi = 1.00;
+var pen = 0;
+var sdPen = 0;
+var bgPen = 0;
+var sdMass = 0;
+var bgMass = 0;
+
+var energy = 0;
+var power = 0;
+var nose = "WC";
+
+
+
+var sliderN = document.getElementById("sliderN");
+var sliderD = document.getElementById("sliderD");
+var sliderW = document.getElementById("sliderW");
+var sliderV = document.getElementById("sliderV");
+var outputN = document.getElementById("outputN"); 
+var outputD = document.getElementById("outputD"); 
+var outputW = document.getElementById("outputW");
+var outputV = document.getElementById("outputV");
+
+var g_canvas = document.getElementById("graphCanvas");
+
+
+var g_ctx = g_canvas.getContext("2d");
+
+
+
+
+function updateGraph() {
+  g_ctx.clearRect(0,0,500,20);
+  g_ctx.fillStyle = "red";
+  g_ctx.fillRect(0, 0,     300/50*(pen), 20);
+  g_ctx.fillStyle = "black";    g_ctx.fillText("PEN: "+Math.round(pen)+ " in",5,15);  
+
+ g_ctx.clearRect(0,30,500,20);
+  g_ctx.fillStyle = "red";
+  g_ctx.fillRect(0, 30,         300/100 * sdMass, 20); 
+  g_ctx.fillStyle = "black";      g_ctx.fillText("SDM: "+ Math.round(sdMass) + " gr",5,45);
+
+
+
+
+  g_ctx.clearRect(0,60,500,20);
+  g_ctx.fillStyle = "red";
+  g_ctx.fillRect(0, 60,     300/100 * bgMass, 20);
+  g_ctx.fillStyle = "black";            g_ctx.fillText("BGM: "+ Math.round(bgMass) + " gr",5,75);     
+
+
+ g_ctx.clearRect(0,90,500,20);
+  g_ctx.fillStyle = "red";
+  g_ctx.fillRect(0, 90,         300/1000 * energy, 20); 
+  g_ctx.fillStyle = "black";      g_ctx.fillText("KE: "+ Math.round(energy) + " ft-lb",5,105);
+
+
+g_ctx.clearRect(0,120,500,20);
+  g_ctx.fillStyle = "red";
+  g_ctx.fillRect(0, 120,         300/1000 * power, 20); 
+  g_ctx.fillStyle = "black";      g_ctx.fillText("PF: "+ Math.round(power) + " ",5,135);
+
+
+  
+       
+}
+
+////////////////////////////////
+// this guy does all the work //
+////////////////////////////////
+
+function calculate() {
+
+  switch(sliderN.value){
+  case "1" :    phi=1.00;alpha=0.685;nose="WC";                break;
+  case "2" :        phi=0.66;alpha=0.735;nose="TC"; break; 
+  case "3" :        phi=0.66;alpha=0.725;nose="SWC"; break; 
+  case "4" :        phi=0.66;alpha=0.720;nose="RN"; break; 
+  case "5" :        phi=0.50;alpha=0.745;nose="RB"; break; 
+  case "6" :
+        phi=0.82;alpha=0.740;nose="MSH"; break;
+        }
+        
+pen = sliderV.value**alpha*sliderW.value/7000/(sliderD.value/200)**2/3.14;  
+
+sdPen = pen-3;
+
+bgPen = pen-3;
+
+bgPen = pen;
+
+if(sdPen>15) {sdPen=15}
+
+
+    
+sdMass=3.14*(sliderD.value/200) **2*sdPen*17*phi;
+      
+      
+bgMass=3.14*(sliderD.value/200) **2*bgPen*17*phi;
+
+energy = sliderV.value * sliderV.value * sliderW.value /   
+450240;
+
+
+power = sliderV.value * sliderW.value / 1000;
+
+  outputD.innerHTML = sliderD.value;
+  outputW.innerHTML = sliderW.value;
+  outputV.innerHTML = sliderV.value;
+  outputN.innerHTML =nose; 
+updateGraph();
+}
+  
+
+
+
+
+calculate();
+
+</script>
+
+</html
